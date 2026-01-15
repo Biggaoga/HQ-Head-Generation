@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="High-Quality Full-Head 3D Model Reconstruction from Any Single Portrait Image">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>High-Quality Full-Head 3D Avatar Generation from Any Single Portrait Image</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <script src="https://kit.fontawesome.com/ec39017701.js" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"></script>
+  <script src="./static/js/katex.js"></script>
+
+  <style>
+    .image-group {
+      display: flex;
+      justify-content: space-between;  
+    }
+    .image-group img {
+      flex: 1;
+    }
+    .image-group {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- <div id="loading">
+    <div class="loader"></div>
+  </div> -->
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <br><br><br>
+            <h1 class="title is-1 publication-title">High-Quality Full-Head 3D Avatar Generation from Any Single Portrait Image</h1>
+            <h4 class="title is-4 publication-title" style="color:#5a6268;"> In Submission</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <br><br>
+
+  <!-- Teaser Picture -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+          <img class="cover" src="./static/imgs/teaser.png" style="width:1000px; margin-bottom:20px;">
+          <div class="container">
+            <div id="results-carousel" class="carousel results-carousel">
+              <div class="item">
+                <video id="replay-video0" muted preload autoplay loop width="100%">
+                  <source src="./static/videos/2.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="item">
+                <video id="replay-video1" muted preload autoplay loop width="100%">
+                  <source src="./static/videos/3.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="item">
+                <video id="replay-video2" muted preload autoplay loop width="100%">
+                  <source src="./static/videos/7.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="item">
+                <video id="replay-video3" muted preload autoplay loop width="100%">
+                  <source src="./static/videos/8.mp4" type="video/mp4">
+                </video>
+                <br>
+              </div>
+              <div class="item">
+                <video id="replay-video4" muted preload autoplay loop width="100%">
+                  <source src="./static/videos/443.mp4" type="video/mp4">
+                </video>
+                <br>
+              </div>
+              <div class="item">
+                <video id="replay-video5" muted preload autoplay loop width="100%">
+                  <source src="./static/videos/66804.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <p style="max-width: 1000px; margin: 00px auto; text-align: justify;">
+            <strong>We generate multi-view images around the head from a single portrait image and the 3D Gaussian point cloud of the identity is then reconstructed using the multi-view images.</strong> Our method is capable of performing frontal face prediction, stylized head generation, and facial expression animation, achieving compelling results across these tasks.
+          </p>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Abstract. -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              In this work, we introduce a novel high-fidelity full-head 3D avatar generation method from a single image,
+              regardless of perspective, style, expression, or accessories. Prior works often fail to preserve consistent 
+              head geometry and facial details, primarily due to their limited capacity in modeling fine-grained facial 
+              textures and maintaining identity information. To address these challenges, we construct <strong>a new high-quality dataset</strong>
+               containing 227 sequences of digital human portraits captured from 96 different perspectives, totalling 21,792 frames,
+                featuring high-quality facial texture details. To further improve performance, we propose a novel multi-view diffusion named 
+                <strong>ID-TS diffusion model</strong>  , which integrate identity and expression information into the two-stage multi-view diffusion process.
+                 The low-resolution stage ensures structural consistency of heads across multiple views, while the high-resolution stage
+                  preserves facial detail fidelity and coherence. Finally, we propose <strong>an enhanced feed-forward Gaussian avatar reconstruction method</strong>
+                   that optimizes the network on multi-view images of each single subject, significantly improving 3D facial texture details. 
+                   Extensive experiments show that our method demonstrates robust performance across challenging scenarios, 
+                   while showcasing broad applicability across numerous downstream tasks.
+            </p>
+          </div>
+        </div>
+      </div>
+  </section>
+ 
+
+
+ <!-- / Overview.   -->
+<!--  <section class="section">-->
+<!--    <div class="container is-max-desktop" style="max-width: 800px; margin: 0 auto;">-->
+<!--      <div class="content has-text-centered">-->
+<!--        <h2 class="title is-3"><strong>Overview</strong></h2>-->
+<!--        <div class="content has-text-justified" style="font-size: 0.9rem; line-height: 1.6;">-->
+<!--          <img src="./static/imgs/overview.png" alt="Image 1" style="width: 100%; max-width: 800px; display: block; margin: 10px auto;">-->
+<!--          <p>-->
+<!--            <strong>Overview of the Multi-Source Human Dataset and Our GeneMAN Pipeline. </strong>We have constructed a multi-source human dataset comprising 3D scans, videos, 2D images, and synthetic data. This dataset is utilized to train human-specific 2D and 3D prior models, which provide generalizable geometric and texture priors for our GeneMAN framework. -->
+<!--            Through geometry initialization, sculpting, and multi-space texture refinement in GeneMAN, we achieve high-fidelity 3D human body reconstruction from single in-the-wild images.-->
+<!--          </p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+  
+
+
+<!-- Method. --> 
+<section class="section">
+  <div class="container is-max-desktop" style="max-width: 800px; margin: 0 auto;">
+    <div class="content has-text-centered">  
+      <h2 class="title is-3" ><strong>Method</strong></h2>
+      <div class="content has-text-justified" style="font-size: 0.9rem; line-height: 1.6;">  
+        <img src="./static/imgs/pipeline.jpg" alt="Image 1" style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto; margin-top: 20px;">
+        <p>
+          Overview of our inference pipeline. <strong>Phase 1</strong>: In the low-resolution stage, we embed camera pose 
+          <strong>e</strong> and noise step <strong>t</strong> via positional encoding, concatenate them, and feed them into the U-Net’s 
+          residual blocks. The conditional image <strong>x</strong> is encoded into the latent space of the VAE encoder<strong> E</strong>, 
+          concatenated with noise, and processed alongside CLIP and ArcFace embeddings via cross-attention in the transformer block, 
+          generating multi-view images with accurate head shapes. In the high-resolution stage, we upsample the previous outputs, 
+          do element-wise addition with latent noise, and denoise them, outputting comprises multi-view images with high-fidelity texture details.
+           <strong>Phase 2</strong>: With front/left/back/right images as inputs and remaining frames as supervision for 3D U-Net optimization, 
+           we finally yield a high-quality Guassian head <strong>P</strong>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- Results. -->
+<section class="section">
+  <div class="container is-max-desktop" style="max-width: 800px; margin: 0 auto;">
+    <h2 class="title is-3 has-text-centered">Experiment</h2>
+    <h2 class="title is-5 has-text-centered">Quantitative Comparison of single image to 3D head</h2>
+    <div class="content has-text-justified" style="font-size: 0.9rem; line-height: 1.6;">
+      <img src="./static/imgs/quant_cmp/whole-head.png" alt="Image 1" style="width: 100%; max-width: 800px; height: auto;">
+    </div>
+    <div class="content has-text-justified" style="font-size: 0.9rem; line-height: 1.6;">
+      <img src="./static/imgs/quant_cmp/whole.png" alt="Image 1" style="width: 100%; max-width: 800px; height: auto;">
+    </div>
+    <h2 class="title is-5 has-text-centered">Qualitative Comparison of single image to 3D head</h2>
+    <div class="hero-body" style="padding: 0; text-align: center;">
+      <video controls muted preload autoplay loop style="width: 100%; max-width: 1000px; height: auto;">
+        <source src="static/videos/supp/whole_head.mp4" type="video/mp4">
+      </video>
+      <hr>
+      <video controls muted preload autoplay loop style="width: 100%; max-width: 1000px; height: auto;">
+        <source src="static/videos/supp/whole.mp4" type="video/mp4">
+      </video>
+      <hr>
+    </div>
+
+    <h2 class="title is-5 has-text-centered">Quantitative Comparison of 3D head reconstruction</h2>
+    <div class="content has-text-justified" style="font-size: 0.9rem; line-height: 1.6;">
+      <img src="./static/imgs/quant_cmp/recon.png" alt="Image 1" style="width: 100%; max-width: 800px; height: auto;">
+    </div>
+    <h2 class="title is-5 has-text-centered">Qualitative Comparison of 3D head reconstruction</h2>
+    <div class="hero-body" style="padding: 0; text-align: center;">
+      <video controls muted preload autoplay loop style="width: 100%; max-width: 1000px; height: auto;">
+        <source src="./static/videos/supp/recon.mp4" type="video/mp4">
+      </video>
+      <hr>
+    </div>
+
+    <h2 class="title is-5 has-text-centered">Quantitative Comparison of novel multi-view synthesis</h2>
+    <div class="content has-text-justified" style="font-size: 0.9rem; line-height: 1.6;">
+      <img src="./static/imgs/quant_cmp/multi-view.png" alt="Image 1" style="width: 100%; max-width: 800px; height: auto;">
+    </div>
+    <h2 class="title is-5 has-text-centered">Qualitative Comparison of novel multi-view synthesis</h2>
+    <div class="hero-body" style="padding: 0; text-align: center;">
+      <video controls muted preload autoplay loop style="width: 100%; max-width: 1000px; height: auto;">
+        <source src="./static/videos/supp/multiview.mp4" type="video/mp4">
+      </video>
+      <hr>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column" style="width: 100%;">
+        <h2 class="title is-3">More Qualitative Results</h2>
+
+        <h2 class="title is-5 has-text-centered">Video as Input for 4D Novel View Synthesis</h2>
+        <div class="hero-body" style="padding: 0; text-align: center;">
+          <video controls muted preload autoplay loop style="width: 100%; max-width: 1000px; height: auto;">
+            <source src="static/videos/supp/4d_portrait.mp4" type="video/mp4">
+          </video>
+          <hr>
+        </div>
+        <h2 class="title is-5 has-text-centered" style="margin-top: 20px">Generate frontal face from side view</h2>
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">Input Image</b></h4>
+              <img src="./static/videos/supp/front-face/case1/0020.png">
+            </div>
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">horizontal 3D</b></h4>
+              <video muted="" loop="" autoplay="">
+                <!-- Your video here -->
+                <source src="./static/videos/supp/front-face/case1/horizontal.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">vertical 3D</b></h4>
+              <video muted="" loop="" autoplay="">
+                <!-- Your video here -->
+                <source src="./static/videos/supp/front-face/case1/vertical.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <!-- row 1 -->
+        <h3 class="title is-4 has-text-centered"></h3>
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">Input Image</b></h4>
+              <img src="./static/videos/supp/front-face/case2/white.png">
+            </div>
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">horizontal 3D</b></h4>
+              <video muted="" loop="" autoplay="">
+                <!-- Your video here -->
+                <source src="./static/videos/supp/front-face/case2/horizontal.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">vertical 3D</b></h4>
+              <video muted="" loop="" autoplay="">
+                <!-- Your video here -->
+                <source src="./static/videos/supp/front-face/case2/vertical.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <!-- row 2 -->
+        <h3 class="title is-4 has-text-centered"></h3>
+        <hr>
+
+        <h2 class="title is-5 has-text-centered" style="margin-top: 20px">Anime-style generation</h2>
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">Input Image</b></h4>
+              <img src="./static/videos/supp/animate/case1/white.png">
+            </div>
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">generated novel-view</b></h4>
+              <img src="./static/videos/supp/animate/case1/concat.jpg">
+            </div>
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">horizontal 3D</b></h4>
+              <video muted="" loop="" autoplay="">
+                <!-- Your video here -->
+                <source src="./static/videos/supp/animate/case1/horizontal.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">vertical 3D</b></h4>
+              <video muted="" loop="" autoplay="">
+                <!-- Your video here -->
+                <source src="./static/videos/supp/animate/case1/vertical.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <!-- row 1 -->
+        <h3 class="title is-4 has-text-centered"></h3>
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">Input Image</b></h4>
+              <img src="./static/videos/supp/animate/case2/white.png">
+            </div>
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">generated novel-view</b></h4>
+              <img src="./static/videos/supp/animate/case2/concat.jpg">
+            </div>
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">horizontal 3D</b></h4>
+              <video muted="" loop="" autoplay="">
+                <!-- Your video here -->
+                <source src="./static/videos/supp/animate/case2/horizontal.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column is-centered has-text-centered">
+              <h4 class="title is-5 is-centered has-text-centered"><b style="color:#808080">vertical 3D</b></h4>
+              <video muted="" loop="" autoplay="">
+                <!-- Your video here -->
+                <source src="./static/videos/supp/animate/case2/vertical.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <!-- row 2 -->
+        <h3 class="title is-4 has-text-centered"></h3>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--<section class="section" id="BibTeX">-->
+<!--  <div class="container is-max-desktop content">-->
+<!--    <h2 class="title">BibTeX</h2>-->
+<!--    <pre><code>@misc{lyu2024facelift,-->
+<!--    title={FaceLift: Single Image to 3D Head with View Generation and GS-LRM},-->
+<!--    author={Weijie Lyu and Yi Zhou and Ming-Hsuan Yang and Zhixin Shu},-->
+<!--    year={2024},-->
+<!--    eprint={2412.17812},-->
+<!--    archivePrefix={arXiv},-->
+<!--    primaryClass={cs.CV},-->
+<!--    url={https://arxiv.org/abs/2412.17812}-->
+<!--    }</code></pre>-->
+<!--  </div>-->
+<!--</section>-->
+
+  <script>
+    $(window).on('load', function () {
+      $('#loading').hide();
+    })
+  </script>
+</body>
+
+</html>
