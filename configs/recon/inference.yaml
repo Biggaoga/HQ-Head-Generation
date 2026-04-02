@@ -1,0 +1,54 @@
+input_size: 256
+down_channels:
+  - 64
+  - 128
+  - 256
+  - 512
+  - 1024
+  - 1024
+down_attention:
+  - false
+  - false
+  - false
+  - true
+  - true
+  - true
+mid_attention: true
+up_channels:
+  - 1024
+  - 1024
+  - 512
+  - 256
+  - 128
+up_attention:
+  - true
+  - true
+  - true
+  - false
+  - false
+splat_size: 128
+output_size: 512
+data_mode: s3
+fovy: 10
+znear: 0.01
+zfar: 1000
+num_views: 8
+num_input_views: 4
+cam_radius: 1.5
+num_workers: 8
+subject: mini_data6/h5
+bias: 0
+workspace: ./workspace
+resume: null
+batch_size: 1
+gradient_accumulation_steps: 1
+num_epochs: 600
+lambda_lpips: 1.0
+gradient_clip: 1.0
+mixed_precision: bf16
+lr: 1e-6
+prob_grid_distortion: 0.5
+prob_cam_jitter: 0.5
+test_path: null
+force_cuda_rast: false
+fancy_video: false
