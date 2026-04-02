@@ -1,5 +1,5 @@
 # [AAAI 2026] High-Quality Full-Head 3D Avatar Generation from Any Single Portrait Image (HQ-Head)
-[![arXiv](https://img.shields.io/badge/paper-arxiv-179bd3)](https://arxiv.org/abs/2503.08516) [![project](https://img.shields.io/badge/project-page-green)](https://biggaoga.github.io/HQ-Head-Generation/) [![hf](https://img.shields.io/badge/hugging-face-yellow)](https://huggingface.co/datasets/CaiYuanhao/DiffusionGS)
+[![arXiv](https://img.shields.io/badge/paper-arxiv-179bd3)](https://arxiv.org/abs/2503.08516) [![project](https://img.shields.io/badge/project-page-green)](https://biggaoga.github.io/HQ-Head-Generation/) [![hf](https://huggingface.co/BarryGao/HQ-Head)](https://huggingface.co/datasets/CaiYuanhao/DiffusionGS)
 ![Pipeline](assets/pipeline.jpg)
 
 ## Environment Setup
